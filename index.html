@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-13 10:58:01" itemprop="dateModified" datetime="2024-11-13T10:58:01+08:00">2024-11-13</time>
+                <time title="Modified: 2024-11-13 11:10:15" itemprop="dateModified" datetime="2024-11-13T11:10:15+08:00">2024-11-13</time>
               </span>
 
           
@@ -213,7 +213,9 @@
 <blockquote>
 <p>联合概率分布</p>
 </blockquote>
-<script type="math/tex; mode=display">f(\xi_1,\xi_2,\xi_3,\xi_4 )= {1\over{4\pi^2m_0\mu_2}}\exp(-{\xi_1^2 + \xi_2^2 \over 2m_0})\exp(-{\xi_3^2 + \xi_4^2 \over 2\mu}) \tag{1}</script>
+<script type="math/tex; mode=display">f(x) =1</script><script type="math/tex; mode=display">f(\xi_1,\xi_2,\xi_3,\xi_4 )= 
+{1\over{4\pi^2m_0\mu_2}}\exp(-{\xi_1^2 + \xi_2^2 \over 2m_0})\exp(-{\xi_3^2 + \xi_4^2 \over 2\mu})
+ \tag{1}</script>
       
     </div>
 
@@ -447,6 +449,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
