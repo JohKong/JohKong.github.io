@@ -249,7 +249,7 @@ hr {
   margin: 40px 0;
 }
 blockquote {
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #877370;
   color: var(--blockquote-color);
   margin: 0;
   padding: 0 15px;
@@ -271,7 +271,7 @@ kbd {
   border: 1px solid #ccc;
   border-radius: 0.2em;
   box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.1);
-  color: #555;
+  color: #5d2b90;
   font-family: inherit;
   padding: 0.1em 0.3em;
   white-space: nowrap;
@@ -396,7 +396,7 @@ code {
 code {
   background: #eee;
   border-radius: 3px;
-  color: #555;
+  color: #5d2b90;
   padding: 2px 4px;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1168,7 +1168,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #4b26e2;
+  background: #c6ffff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
