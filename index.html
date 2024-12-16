@@ -163,6 +163,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/15/PINN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lianzhong.png">
+      <meta itemprop="name" content="John Kong">
+      <meta itemprop="description" content="躺平一念起，刹那天地宽。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiangKong Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/15/PINN/" class="post-title-link" itemprop="url">利用Python修改下载的论文标题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-15 10:37:16" itemprop="dateCreated datePublished" datetime="2024-12-15T10:37:16+08:00">2024-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-16 16:59:22" itemprop="dateModified" datetime="2024-12-16T16:59:22+08:00">2024-12-16</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h1><p>作为一名研究生，读论文就是日行一善。</p>
+<p>但从数据库下载pdf格式的论文常常是这样：</p>
+<p><img src="/2024/12/15/PINN/Fig1.png" alt="网站下载的pdf论文"></p>
+<p>是不是让人感到非常恼火呢？</p>
+<p><img src="/2024/12/15/PINN/gannai.png" alt="大崎甘奈"></p>
+<p>可能你会说，为什么不使用万能的文献管理软件呢？</p>
+<p>如果你的女朋友让你给她总结文献，</p>
+<p>你直接把这一堆pdf塞她嘴里，还是显得有点呆了。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>Python作为著名的脚本语言，可以实现这个功能.</p>
+<p>部分代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ==========================*- R &amp; Python -*==============================#</span></span><br><span class="line"><span class="comment"># # _  _ _      South       |                                                </span></span><br><span class="line"><span class="comment"># #| |/ / |     China       | Project: Rename Pdf Files as papers title         </span></span><br><span class="line"><span class="comment"># #| &#x27; /| |     University  | Author: John Kong                              </span></span><br><span class="line"><span class="comment"># #| . \| |___  Of          | Date: 2024-12-16                      </span></span><br><span class="line"><span class="comment"># #|_|\_\_____| Technology  |                                                  </span></span><br><span class="line"><span class="comment"># ========================================================================#</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> PyPDF2 <span class="keyword">import</span> PdfReader</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extract_title_from_pdf</span>(<span class="params">pdf_path</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Extract paper titles from metadata or content of PDF files&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        reader = PdfReader(pdf_path)</span><br><span class="line">        <span class="comment"># Retrieve the title from the metadata (if any)</span></span><br><span class="line">        meta = reader.metadata</span><br><span class="line">        title = meta.title</span><br><span class="line">        title =title+<span class="string">&quot;_&quot;</span>+<span class="built_in">str</span>(meta.subject)</span><br><span class="line">        title = title.split(<span class="string">&quot;doi:&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">        title = re.sub(<span class="string">r&#x27;[\/:*?&quot;&lt;&gt;|]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, title)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> title:  </span><br><span class="line">          <span class="comment"># If there is no title in the metadata(Just Like Physics of Fluids), try extracting from the first page</span></span><br><span class="line">            first_page = reader.pages[<span class="number">1</span>]</span><br><span class="line">            text = first_page.extract_text()</span><br><span class="line">          <span class="comment"># Using regular expressions to match titles</span></span><br><span class="line">            title_match = re.search(<span class="string">r&#x27;^[A-Za-z0-9\s\(\)\-:,.]+&#x27;</span>, text)</span><br><span class="line">            <span class="keyword">if</span> title_match:</span><br><span class="line">                title = title_match.group(<span class="number">0</span>).strip()</span><br><span class="line">                title = title_match.group(<span class="number">0</span>).replace(<span class="string">&#x27;\n&#x27;</span>, <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">          <span class="comment"># Remove illegal characters in the title</span></span><br><span class="line">                title = re.sub(<span class="string">r&#x27;[\/:*?&quot;&lt;&gt;|]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, title)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                title = <span class="string">&quot;Untitled&quot;</span></span><br><span class="line">        <span class="keyword">return</span> title</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Error reading <span class="subst">&#123;pdf_path&#125;</span>: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Untitled&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后我们就可以愉快地修改文件名了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/15/SCI-Writing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -310,7 +386,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-15 11:58:55" itemprop="dateModified" datetime="2024-11-15T11:58:55+08:00">2024-11-15</time>
+                <time title="Modified: 2024-12-16 16:42:52" itemprop="dateModified" datetime="2024-12-16T16:42:52+08:00">2024-12-16</time>
               </span>
 
           
@@ -331,9 +407,6 @@
 <h2 id="2-数据处理"><a href="#2-数据处理" class="headerlink" title="2.数据处理"></a>2.数据处理</h2><h3 id="2-1-读取数据"><a href="#2-1-读取数据" class="headerlink" title="2.1 读取数据"></a>2.1 读取数据</h3><blockquote>
 <p><em>考虑到庞大的数据量，这里只展示了前几行数据</em></p>
 </blockquote>
-<p>:::{.side .side-right}</p>
-<p><em>Anything</em> on the left side</p>
-<p>:::</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">Pre_59114 <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;dataset/Data_59114_daily.csv&quot;</span><span class="punctuation">,</span> header <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">Pre_59114</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">##           Date precipitation</span><br><span class="line">## 1     1965/1/1    0.00000000</span><br><span class="line">## 2     1965/1/2    0.00000000</span><br><span class="line">## 3     1965/1/3    0.00000000</span><br><span class="line">## 4     1965/1/4    0.00000000</span><br><span class="line">## 5     1965/1/5    0.50000000</span><br><span class="line">## 6     1965/1/6    5.66666667</span><br><span class="line">## 7     1965/1/7    0.37500000</span><br><span class="line">## 8     1965/1/8    0.00000000</span><br><span class="line">## 9     1965/1/9    0.00000000</span><br><span class="line">## 10   1965/1/10    0.00000000</span><br><span class="line">## 11   1965/1/11    0.00000000</span><br><span class="line">## 12   1965/1/12    0.00000000</span><br><span class="line">## 13   1965/1/13    0.00000000</span><br><span class="line">## 14   1965/1/14    0.00000000</span><br><span class="line">## 15   1965/1/15    0.00000000</span><br><span class="line">## 16   1965/1/16    0.00000000</span><br></pre></td></tr></table></figure>
 <h3 id="2-2-清洗数据，先按照月份处理"><a href="#2-2-清洗数据，先按照月份处理" class="headerlink" title="2.2 清洗数据，先按照月份处理"></a>2.2 清洗数据，先按照月份处理</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">Pre_59114 <span class="operator">%&gt;%</span></span><br><span class="line">  mutate<span class="punctuation">(</span>Date <span class="operator">=</span> as.Date<span class="punctuation">(</span>Date<span class="punctuation">,</span> format <span class="operator">=</span> <span class="string">&quot;%Y/%m/%d&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">%&gt;%</span></span><br><span class="line"><span class="comment">#计算每年一月的降水量平均值</span></span><br><span class="line">  filter<span class="punctuation">(</span>format<span class="punctuation">(</span>Date<span class="punctuation">,</span> <span class="string">&quot;%m&quot;</span><span class="punctuation">)</span> <span class="operator">==</span> <span class="string">&quot;01&quot;</span><span class="punctuation">)</span><span class="operator">%&gt;%</span> </span><br><span class="line">  group_by<span class="punctuation">(</span>format<span class="punctuation">(</span>Date<span class="punctuation">,</span> <span class="string">&quot;%Y&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> </span><br><span class="line">  summarise<span class="punctuation">(</span>mean<span class="punctuation">(</span>precipitation<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">%&gt;%</span></span><br><span class="line">  rename<span class="punctuation">(</span>Date <span class="operator">=</span> `format(Date, &quot;%Y&quot;)`<span class="punctuation">,</span></span><br><span class="line">         pre<span class="operator">=</span> `mean(precipitation)`<span class="punctuation">)</span><span class="operator">%&gt;%</span></span><br><span class="line">  head<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
@@ -356,7 +429,7 @@
 <h2 id="Including-Plots"><a href="#Including-Plots" class="headerlink" title="Including Plots"></a>Including Plots</h2><script type="math/tex; mode=display">x^2 = \int ^2 _1 s a \  \mathrm{d}x \tag{1.1}</script><p>You can also embed plots, for example:</p>
 <p><img src="/2024/11/12/Rmd/pressure-1.png" alt="plot of chunk pressure"></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-
+<h3 id="2-8-计算斜率"><a href="#2-8-计算斜率" class="headerlink" title="2.8 计算斜率"></a>2.8 计算斜率</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">lm(ExtrePreIndex$Rx1day$Rx1day ~ time(ExtrePreIndex$Rx1day$Year))</span><br><span class="line"></span><br><span class="line"># 查看ExtrePreIndex里有哪些数据框</span><br><span class="line"></span><br><span class="line">names(ExtrePreIndex)</span><br><span class="line"></span><br><span class="line"># 写一个循环，计算所有数据框的斜率，存在一个列表里</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for (i in 1:length(names(ExtrePreIndex))) &#123;</span><br><span class="line">  print(lm(ExtrePreIndex[[i]][[2]] ~ time(ExtrePreIndex$Rx1day$Year)))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -580,7 +653,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
